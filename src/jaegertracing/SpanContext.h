@@ -135,6 +135,15 @@ class SpanContext : public opentracing::SpanContext {
 
     const std::string& debugID() const { return _debugID; }
 
+    void setSampled(bool sampled) {
+        if (sampled) {
+            _flags |= static_cast<unsigned char>(SpanContext::Flag::kSampled);
+        }
+        else {
+            _flags &= ~static_cast<unsigned char>(SpanContext::Flag::kSampled);
+        }
+    }
+
     bool isSampled() const
     {
         return _flags & static_cast<unsigned char>(Flag::kSampled);
